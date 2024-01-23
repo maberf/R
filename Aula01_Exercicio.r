@@ -36,9 +36,24 @@ somacol23 <- (df1$coluna2+as.integer(df1$coluna3))
 typeof(somacol23)
 #
 # 3. Navegando no Dataframe
-# Converter o banco de dados “AirPassengers” para um data.frame.
-
+# Converter o banco de dados “AirPassengers” para um dataframe.
 #	O nome do banco convertido será “data”.
+# Antes verificar AirPassengers digitando o código.
+# Notar que AirPassengres é uma tabela mensal de Jan/1949 até Dec/1960.
+rm(list=ls()) # Primeiro limpa-se o ambiente
+data <- data.frame(AirPassengers) #
 # Vamos nomear a coluna do banco “data” de “Passengers”.
+colnames(data)[1] = "Passengers"
 #	Vamos criar uma nova coluna chamado “date” com as datas associadas.
+data$date <- seq(from=as.Date("1949/01/01"), to=as.Date("1960/12/01"), by="month")
 # Vamos converter os dados da coluna “Passengers” para o tipo “numeric”.
+as.double(data$Passengers)
+# Confirmação dos tratamentos feitos no dataframe
+typeof(data$Passengers)
+typeof(data$date)
+data
+#
+# 4. Funções Básicas
+# Utilizando o banco de dados iris, crie uma cópia do banco chamada de data. No banco de dados “data” crie 2 novas variáveis:
+# variável 1 (ln Sepal.Length): deve ser o logaritmo neperiano da variável “Sepal.Length”.
+# variável 2 (exp Sepal.Length): deve ser o exponencial neperiano da variável “Sepal.Length”.
