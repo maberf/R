@@ -54,6 +54,13 @@ typeof(data$date)
 data
 #
 # 4. Funções Básicas
-# Utilizando o banco de dados iris, crie uma cópia do banco chamada de data. No banco de dados “data” crie 2 novas variáveis:
-# variável 1 (ln Sepal.Length): deve ser o logaritmo neperiano da variável “Sepal.Length”.
-# variável 2 (exp Sepal.Length): deve ser o exponencial neperiano da variável “Sepal.Length”.
+# Utilizando o banco de dados iris, crie uma cópia chamado de data(base).
+database <- iris
+#No banco de dados “data(base)” crie 2 novas variáveis:
+# variável 1 (ln Sepal.Length): logaritmo neperiano da variável “Sepal.Length”.
+database$lnSepalLenght <- log(database$Sepal.Length)
+# variável 2 (exp Sepal.Length): exponencial neperiano da variável “Sepal.Length”.
+database$expSepalLength <- exp(database$Sepal.Length)
+database
+#
+# FIM
