@@ -36,3 +36,9 @@ somacol23 <- (df1$coluna2+as.integer(df1$coluna3))
 typeof(somacol23)
 #
 # 3. Navegando no Dataframe
+# Converter o banco de dados “AirPassengers” para um data.frame.
+
+#	O nome do banco convertido será “data”.
+# Vamos nomear a coluna do banco “data” de “Passengers”.
+#	Vamos criar uma nova coluna chamado “date” com as datas associadas.
+# Vamos converter os dados da coluna “Passengers” para o tipo “numeric”.
