@@ -6,6 +6,10 @@ rm(list = ls())
 
 cat("\014")
 
+#Setup do diretório
+setwd("/home/maber/R/Aula2")
+getwd()
+#
 # Carregando arquivo.txt
 # Importando arquivo com read.table()
 
@@ -72,12 +76,12 @@ dim(df3_df3)
 write.table(df3_df3, file = "df3_df3_v2.txt", sep = "|", col.names = NA)
 list.files()
 
-df3_df3_v2 <- read.table("df3_df3_v2.txt")
+df3_df3_v2 <- read.table("df3_df3_v2.txt") # inserir o separador
 View(df3_df3_v2)
 
 
 
-# Carregando arquivo.csv usando o pacote readr 
+# Carregando arquivo.csv usando o pacote readr
 install.packages("readr")
 library(readr)
 
@@ -123,7 +127,7 @@ excel_sheets("PopUrbana.xlsx")
 # Lendo a planilha do Excel
 read_excel("PopUrbana.xlsx")
 View(read_excel("PopUrbana.xlsx"))
-read_excel("PopUrbana.xlsx", sheet = "Period2")
+read_excel("PopUrbana.xlsx", sheet = "Period2") #  sheets são as abas
 read_excel("PopUrbana.xlsx", sheet = 3)
 read_excel("PopUrbana.xlsx", sheet = 4)  #não existe
 
@@ -137,7 +141,7 @@ class(df_todas)
 View(df_todas)
 df_todas[[2]]
 # Juntando vários dataframes em um só
-install.packages(plyr)
+install.packages("plyr")
 library(plyr)
 dft=join_all(df_todas, by = "country")
 View(dft)
@@ -150,7 +154,7 @@ dim(df)
 # Importando um range de uma planilha e definindo o tipo de dado de cada coluna
 df <- read_excel("PopUrbana.xlsx", sheet = 3,range = "A1:H30", col_types = c("text","numeric","numeric","numeric","numeric","numeric","numeric","numeric"))
 df
-    
+
 
 # Manipulação de dados
 
@@ -197,7 +201,7 @@ glimpse(mutate(alunos_df, mediaprova = (P1+P2)/2))
 
 alunos_df2 = mutate(alunos_df, mediaprova = (P1+P2)/2)
 head(alunos_df2)
-glimpse(alunos_df2)
+glimpse(alunos_df2) # tem a mesma funcionalidade do str
 
 
 # select()
@@ -258,7 +262,7 @@ alunos_df2 %>%
   filter(mediaprova >= 7) %>%
   head
 
-# mutate() - criar novas variáveis em tempo de execução
+# mutate() - criar novas variáveis em tempo de execução (não inclui definitivamente)
 head(alunos_df2)
 alunos_df2 %>% 
   mutate(mediafinal = TR*0.3+ LT*0.3 + mediaprova*0.4)%>%
@@ -278,7 +282,7 @@ alunos_df2 %>%
 alunos_df2 %>% filter(!is.na(mediafinal)) %>%
   summarise(media_total= mean(mediafinal))
 
-alunos_df2 %>% filter(!is.na(mediafinal))%>%
+alunos_df2 %>% filter(!is.na(mediafinal))%>% # exclamação é
   summarise(media_total= mean(mediafinal), 
             min_media = min(mediafinal), 
             max_media = max(mediafinal),
@@ -627,10 +631,11 @@ altura = (c(1.88, 0, NA, 1.69, 1.68))
 nfilhos=c(0, 2, 1, NA, 0)
 df_teste = data.frame(pais, nome, altura,nfilhos)
 df_teste
-df_teste3=df_teste[complete.cases(df_teste), ]
+df_teste3=df_teste[complete.cases(df_teste), ] # traz as linhas do df que nao tem NA. 
+# na.omit faz a mesma coisa que complete.cases
 df_teste3
 # Seleciona linhas do dataframe que sejam diferentes de NA em coluna específica
 df_teste$altura=c(1.88, 1.2, NA, 1.69, 1.68)
 df_teste
-df_teste3=df_teste[!is.na(df_teste$altura), ]
+df_teste3=df_teste[!is.na(df_teste$altura), ] # olha a negação ! na frente
 df_teste3
