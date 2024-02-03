@@ -4,7 +4,7 @@
 # Diretório de trabalho
 # Setar diretório
 #Podemos fazer diretamente na barra-Session ou por linha de comando
-setwd("C:/Users/adria/OneDrive/Documents/Arquivos_asus/Licenciatura/2024/Programacao_R/Aula1")
+setwd("/home/maber/R/Aula1")
 # Obter diretório
 getwd()
 
