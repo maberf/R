@@ -37,27 +37,27 @@ library(dplyr)
 GER_PI <- read_excel("DEUPROINDMISMEI.xls", sheet = 1, range = "A11:B741")
 head(GER_PI)
 # Troca dos nomes das colunas da base GER_PI para data e prodInd
-colnames(GER_PI) = c("data", "prodInd")
+colnames(GER_PI) <- c("data", "prodInd")
 head(GER_PI)
 # Carregamento dos dados da base csv em um df tibble GER_Price
 GER_Price <- read_csv("FPCPITOTLZGDEU.csv",
-                     col_types = list(
-                       DATE = col_date(),
-                       FPCPITOTLZGDEU = col_double()
-                     ))
+                      col_types = list(
+                        DATE = col_date(),
+                        FPCPITOTLZGDEU = col_double()
+                      ))
 # Alteração dos nomes das colunas de GER_PI
 colnames(GER_Price) <- c("data", "price")
 head(GER_Price)
 #
 # 3. AGRUPAMENTO DE BASE
 #
-# Transformação da coluna com registros apenas por ano em GER_PI
+# Transformação da coluna com registros de data apenas por ano em GER_PI
 GER_PI$data <- year(GER_PI$data)
 head(GER_PI)
 #Criando a Ger_PI_Anual a partir das médias anuais de GER_PI
 GER_PI_Anual <- summarise(group_by(GER_PI, data), prodIndAnual = mean(prodInd))
 head(GER_PI_Anual)
-# Opcionalimente preferiu-se deixar o mesmo formato de datas nos dois dataframes
+# Opcionalmente preferiu-se deixar o mesmo formato de datas nos dois dataframes
 GER_Price$data <- year(GER_Price$data)
 head(GER_Price)
 #
