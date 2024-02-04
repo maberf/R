@@ -282,7 +282,7 @@ alunos_df2 %>%
 alunos_df2 %>% filter(!is.na(mediafinal)) %>%
   summarise(media_total= mean(mediafinal))
 
-alunos_df2 %>% filter(!is.na(mediafinal))%>% # exclamação é
+alunos_df2 %>% filter(!is.na(mediafinal))%>% # exclaamação é negação
   summarise(media_total= mean(mediafinal), 
             min_media = min(mediafinal), 
             max_media = max(mediafinal),
@@ -475,8 +475,6 @@ df_teste2
 #Ajustando ´para 2 casas decimais
 df_teste2$altura=round(df_teste2$altura,2)
 df_teste2
-
- 
 
 
 # Mudar formato data
