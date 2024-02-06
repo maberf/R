@@ -2,14 +2,14 @@
 # Disciplina: Programação em R
 # Aula 03 - A construção de gráficos com a linguagem R
 
+#Limpando o ambiente e o console
 rm(list = ls())
-
 cat("\014")
 #
 #Setup do diretório
 setwd("/home/maber/R/Aula3")
 getwd()
-#
+
 # Demo
 demo("graphics")
 
@@ -34,7 +34,7 @@ plot(lynx)
 plot(lynx, ylab = "Plots com Dataframes", xlab = "")
 plot(lynx, ylab = "Plots com Dataframes", xlab = "Observações")
 plot(lynx, main = "Plots com Dataframes", col = 'red')
-plot(lynx, main = "Plots com Dataframes", col = 'red', col.main = 52, cex.main = 1.5)#cex.main = tamanho da fonte do titulo
+plot(lynx, main = "Plots com Dataframes", col = 'red', col.main = 52, cex.main = 1.5)#cex.main = tamannho da fonte do titulo
 
 
 
@@ -66,7 +66,7 @@ par('pch')
 par('lty')
 
 x = 2:4
-plot(x)
+plot(x, pch = "*")
 
 # Função par: permite configurar formato, tamanho, subdivisões, margens, etc
 par(mfrow = c(2,2), col.axis = "green")
@@ -82,16 +82,17 @@ legend("topright", pch = 1, col = c("blue", "green"), legend = c("Var1","Var2"))
 par(mfrow = c(1,1))
 
 # Cores disponíveis
-# Podemos usar o nome ou o código da cor
 colors()
 
 
 # Salvando os gráficos
 
 # png
-png("Graficonovo.png", width = 500, height = 500, res = 72)
+png("Grafico01.png", width = 500, height = 500, res = 72)
 
-plot(iris$Sepal.Length, iris$Petal.Length, col = iris$Species, main = "Gráfico gerado a partir do Iris")
+plot(iris$Sepal.Length, iris$Petal.Length,
+     col = iris$Species,
+     main = "Gráfico gerado a partir do Iris")
 
 dev.off()
 
@@ -107,10 +108,8 @@ dev.off()
 
 
 
-# Como limpar área de plotagem
-dev.off(dev.list()["RStudioGD"])
 
-
+dev.off(dev.list()["RStudioGD"]) # verificar esse código
 
 # Plots a partir de carga de arquivo
 par(mfrow = c(1,1), col.axis = "black")
@@ -215,7 +214,7 @@ hist(dados, labels = T, breaks = 10, main = "Histograma das Velocidades")
 hist(dados, labels = T, ylim = c(0,10), breaks = 10, main = "Histograma das Velocidades")
 
 
-# Atribuindo o gráfico a um objeto
+# Atribuindo o gráfico a um objeto (variável)
 grafico <- hist(dados, breaks = 10, main = "Histograma das Velocidades")
 
 #Gráfico de Barras
@@ -233,12 +232,11 @@ dados
 
 # Barplot
 barplot(dados)
-barplot(dados, beside = T)
+barplot(dados, beside = T) # TEM QUE POR TYPE = L
 
 # Gráfico de linhas
 #type -  tipo de gráfico que será construído. Vários valores são aceitos, os principais são “p” (pontos), “l” (linhas) e “b” (gpontos e linhas)
 plot(AirPassengers, type = "l", col = "red", lwd = 2, lty = 2, xlab = "Data", ylab = "Quantidade de Passageiros", main = "Evolução da Quantidade de Passageiros")
-
 
 # lwd:largura da linha
 # Gráfico de Pizza
@@ -270,12 +268,12 @@ pie(fatias, labels = paises,
 # Gráfico de Pizza em um dataframe
 ?iris
 #attach: permite utilizar as colunas sem especificar o nome do dataset
-attach(iris)
-Values = table(Species) #função table faz uma tabela de frequência por categoria
+attach(iris) # parecidocom pipe, não precisa copiar o nome do df, último df carregado em memória
+Values = table(Species) #função table faz uma tabela de (conta a) frequência por categoria
 labels = paste(names(Values))
 pie(Values, labels = labels, main = "Distribuição de Espécies")
 
-##Ggplot2
+## GGPLOT2
 
 # Com o pacote `ggplot()` o gráfico é construído a partir a partir de um conjunto de camandas, como vimos na gramática dos dados
 #ggplot(data= dados) +  # Basics: conjuntos dados que serão utilizados
@@ -319,8 +317,6 @@ ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp))
 # Adicionando a camada de geometria
 ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp)) +
   geom_point()
-#Com plot nativo
-plot(gapminder$gdpPercap, gapminder$lifeExp)
 
 # Algumas variações
 # 1) Adicionando uma cor
@@ -344,12 +340,12 @@ ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp, color=continent)) +
 
 # 4) Adicionando um tamanho
 ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(size = 5)
+  geom_point(size = 2)
 
 # 5) Adicionando uma forma
 #http://www.sthda.com/english/wiki/ggplot2-point-shapes (formas disponíveis)
 ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp)) +
-  geom_point(shape = 5)
+  geom_point(shape = 3)
 
 # 6) Adicionando uma cor, um tamanho e uma forma e um título e  títulos nos eixos
 ggplot(data=gapminder, aes(x = gdpPercap, y = lifeExp)) +
@@ -387,19 +383,8 @@ ggplot(data=mpg, aes(x=class, y = drv)) +
 # 2) variavel "hwy" no eixo y
 # 3) utiliza o banco mpg
 # 4) Colorindo pela variavel "class"
-# Deve-se observar que a legenda é criada automaticamente no ggplot2
 ggplot(data=mpg) +
   geom_point(mapping = aes(x=displ, y=hwy, colour=class))
-
-# Trocando a legenda de posição
-ggplot(data=mpg) +
-  geom_point(mapping = aes(x=displ, y=hwy, colour=class))+
-  theme(legend.position = "top")
-
-# Sem legenda
-ggplot(data=mpg) +
-  geom_point(mapping = aes(x=displ, y=hwy, colour=class))+
-  theme(legend.position = "none")
 
 # Gráfico de dispersão com as seguintes caracteristicas:
 # 1) variavel "displ" no eixo x
@@ -416,7 +401,7 @@ ggplot(data=mpg) +
 # 1) variavel "displ" no eixo x
 # 2) variavel "hwy" no eixo y
 # 3) utiliza o banco mpg
-# 4) Dividindo por facetas de acordo com a variavel "class" (facilitar comparação entre as categorias da variável class)
+# 4) Dividindo por facetas de acordo com a variavel "class"
 ggplot(data = mpg) +
   geom_point(mapping = aes(x = displ, y = hwy)) +
   facet_wrap( ~ class, nrow = 3)
@@ -428,7 +413,7 @@ ggplot(data = mpg) +
 ggplot(data = economics) +
   geom_line(mapping = aes(x = date, y = uempmed))
 
-# Mudando o tipo de linha:
+# Mudnado o tipo de linha:
 # linetype:“blank”, “solid”, “dashed”, “dotted”, “dotdash”, “longdash”,
 ggplot(data = economics) +
   geom_line(mapping = aes(x = date, y = uempmed), linetype = "dotted")
@@ -446,12 +431,8 @@ ggplot(data=mpg) +
 # 1) variavel "hwy" no eixo x
 # 2) No eixo y sera mostrado a densidade
 # 3) utiliza o banco mpg
-
-
 ggplot(data=mpg) +
-  geom_histogram(mapping = aes(x=hwy))
-ggplot(data=mpg) +
-  geom_histogram(mapping = aes(x=hwy, y = ..density..))
+  geom_histogram(mapping = aes(x=hwy, y = ..density..)) # ..density.. é percentual
 
 
 
@@ -461,7 +442,7 @@ ggplot(data = diamonds) +
 
 # Boxplot com as seguintes caracteristicas
 # 1) variavel "class" no eixo x
-# 2) variavel "hwy" no eixo y
+# 2) variavel "hwy" no eixo x
 # 3) utiliza o banco mpg
 ggplot(data=mpg) +
   geom_boxplot(mapping = aes(x=class, y=hwy))
@@ -473,11 +454,11 @@ ggplot(data=mpg) +
 #     Ambas as camadas utilizam o banco mpg
 # CAMADA 1 (Grafico de linha)
 #     1) variavel "displ" no eixo x
-#     2) variavel "hwy" no eixo y
+#     2) variavel "hwy" no eixo x
 # CAMADA 2 (Grafico de pontos)
 #     1) variavel "displ" no eixo x
-#     2) variavel "hwy" no eixo y
-#     3) Colorido por "class"
+#     2) variavel "hwy" no eixo x
+#     2) Colorido por "class"
 #
 # O comando labs() informa os titulos, subtitulos e nome dos eixos, etc
 ggplot(data=mpg) +
@@ -545,78 +526,17 @@ ggplot(economics) +
   labs(title = "Pib e desemprego") + theme(legend.position="bottom")+
   theme_minimal() # Tema minimalista
 
-
-
-# Criando  mais um gráfico com várias camadas
-# CAMADA 1 (Grafico de dispersão)
-#     1) variavel "total_bill" no eixo x
-#     2) variavel "tip" no eixo y
-# CAMADA 2 (Grafico linha - incluindo uma reta de regressão)
-#     1) variavel "total_bill" no eixo x
-#     2) variavel "fit" no eixo y
-# CAMADA 3 (Grafico de faixa - incluindo um intervalo de confiança)
-# CAMADA 1
-library(reshape2)
-data(tips, package = 'reshape2')
-View(tips)
-c1 <- geom_point(
-  mapping = aes(x = total_bill, y = tip, color = sex),
-  data = tips,
-  size = 3
-)
-ggplot() + c1
-# Percebam que colocamos a dimensão sex para aparecer nas cores do gráfico e o ggplot automaticamente selecionou as cores para cada sexo
-
-
-# Contruindo um modelo de regressão
-modelo <- lm(tip ~ total_bill, data = tips)
-previsao <- data.frame(
-  total_bill = tips$total_bill, 
-  predict(modelo, interval = "confidence")
-)
-
-head(previsao)
-
-
-# CAMADA 2
-c2 <- geom_line(
-  mapping = aes(x = total_bill, y = fit),
-  data = previsao,
-  color = "blue"
-)
-ggplot() + c1 + c2
-
-#ggplot(data = previsao) + geom_line(aes(x=total_bill, y=fit)) 
-
-
-# CAMADA 3
-c3 <- geom_ribbon(
-  mapping = aes(x = total_bill, ymin = lwr, ymax = upr),
-  data = previsao,
-  alpha = 0.4
-)
-ggplot() + c1 + c2 + c3
-
-
-# Forma mais simples de escrever, considerando que o ggplot possui uma camada estatística:
-ggplot(tips, aes(x = total_bill, y = tip)) +
-  geom_point(aes(color = sex)) +
-  geom_smooth(method = 'lm')
-
-# Salva o ultimo grafico criado
-ggsave(filename = "./graficosteste/Aula 4.png",
+# Salva o ultimo grafico criado, tipo definido pela extensão do arquivo
+ggsave(filename = "./graficos/Aula1.png",
        units = "in",
        width = 8, height = 6,
        dpi = 100)
 
-# Pacote para faciliar a criação de gráficos de froma iterativa
-# Esquisse é um pacote que permite criar gráficos de forma interativa (drag and drop)
+
+# Pacote para faciliar a criação de gráficos de forma iterativa
+# Para se construir o gráfico por template
+# Tipo arrasta e cola! Muito interativo.
+
 install.packages("esquisse")
 library(esquisse)
 esquisser()
-
-# Plotly cria uma barra de iteração no gráfico
-install.packages("plotly")
-library(plotly)
-grafico1 <- ggplot(tips, aes(x = total_bill, y = tip/total_bill)) + geom_point(shape = 1)
-ggplotly()

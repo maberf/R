@@ -19,21 +19,20 @@ setwd("/home/maber/R/Aula3")
 getwd()
 #
 # Carregamento de pacotes, foi previamente verificada a instalação deles
-# library(readxl)
-library(readr)
-# library(lubridate)
-# library(dplyr)
 library(ggplot2)
 #
 # Carregamento da base de dados iris
-iris <- read_csv("iris.csv",
-                 col_types = list(
-                   Sepal.Length = col_double(),
-                   Sepal.Width = col_double(),
-                   Petal.Length = col_double(),
-                   Petal.Width = col_double(),
-                   Species = col_character()
-                 ))
-head(iris)
+df <- iris
+df
+png("IrisDatabase.png", width = 800, height = 600)
+plot <- ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width, color=Species)) +
+  geom_point() +
+  labs(title = "Sepal Length vs Sepal Width",
+       x = "Sepal Length",
+       y = "Sepal Width",
+       subtitle = "Iris Database",
+       caption = "Fonte: Iris database (R-Studio)")
+plot
+dev.off()
 #
 # Criação do gráfico de dispersão
