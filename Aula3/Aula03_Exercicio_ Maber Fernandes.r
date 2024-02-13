@@ -5,9 +5,9 @@
 # Exercício 3 - Construção de gráficos com a linguagem R
 #
 # Grupo:
-# Gustavo Mazzotti - gmazzotti@mztsolutions.com
-# Maber Fernandes - maberf@gmail.com - maber.fernandes@fgv.edu.br
-# Mariane Kiam - mariane.itocazu@gmail.com
+# DOMINGOS NETO ISHII RODRIGUES DE MORAES
+# MABER ATHAYDE FERNANDES
+# VICTOR FERNANDO CORDEIRO LOPES
 #
 #
 #Limpando o ambiente e o console
@@ -25,7 +25,7 @@ library(ggplot2)
 df <- iris
 df
 png("IrisDatabase.png", width = 800, height = 600)
-plot <- ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width, color=Species)) +
+plot <- ggplot(data = df, aes(x = Sepal.Length, y = Sepal.Width, color = Species)) +
   geom_point() +
   labs(title = "Sepal Length vs Sepal Width",
        x = "Sepal Length",
@@ -34,5 +34,3 @@ plot <- ggplot(data=df, aes(x = Sepal.Length, y = Sepal.Width, color=Species)) +
        caption = "Fonte: Iris database (R-Studio)")
 plot
 dev.off()
-#
-# Criação do gráfico de dispersão
