@@ -31,6 +31,6 @@ plot <- ggplot(data = df, aes(x = Sepal.Length, y = Sepal.Width, color = Species
        x = "Sepal Length",
        y = "Sepal Width",
        subtitle = "Iris Database",
-       caption = "Fonte: Iris database (R-Studio)")
+       caption = "Fonte: Iris database")
 plot
 dev.off()
