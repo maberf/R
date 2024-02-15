@@ -75,9 +75,23 @@ dff <- left_join(df, dfweek, by = "date", relationship = "many-to-many")
 # Filter the original dataframe to keep only the complete weeks
 # dff_filtered <- dff %>%
 #  filter(week %in% complete_weeks$week)
- tail(dff)
+head(dff)
 # head(dff_filtered)
 #
 # 5. CAMADA DE USUÁRIO
 #
-# Criar os gráficos!
+# Criação dos gráficos!
+library(ggplot2)
+#
+# Gráfico 1 
+#
+png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
+plot <- ggplot(data = dff, aes(x = week, y = total_cases)) +
+  geom_point() +
+  labs(title = "Semana vs Total de Casos",
+       x = "Semana",
+       y = "Total de Casos",
+       subtitle = "owid-covid-data.xlsx",
+       caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
+plot
+dev.off()

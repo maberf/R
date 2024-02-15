@@ -282,7 +282,7 @@ alunos_df2 %>%
 alunos_df2 %>% filter(!is.na(mediafinal)) %>%
   summarise(media_total= mean(mediafinal))
 
-alunos_df2 %>% filter(!is.na(mediafinal))%>% # exclaamação é negação
+alunos_df2 %>% filter(!is.na(mediafinal))%>% # exclamação é negação
   summarise(media_total= mean(mediafinal), 
             min_media = min(mediafinal), 
             max_media = max(mediafinal),

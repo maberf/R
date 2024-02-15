@@ -305,7 +305,7 @@ library(ggplot2)
 
 # Adicionando a primeira camada, a de dados
 install.packages("gapminder")
-library (gapminder)
+library(gapminder)
 View(gapminder)
 ggplot(data=gapminder)
 
