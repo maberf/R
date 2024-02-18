@@ -2,7 +2,7 @@
 # Disciplina Programação em R
 # Professora Adriana Bezerra Bessa
 # Aluno MABER ATHAYDE FERNANDES
-# Exercício 4 - Criação de um projeto Competo em R
+# Exercício 4 - Criação de um projeto Completo em R
 #
 # Grupo:
 # XXX
@@ -21,6 +21,14 @@ cat("\014")
 # Setup do diretório
 setwd("/home/maber/R/Aula4")
 # getwd()
+#
+# Carregamento de pacotes
+library(dplyr)
+library(cellranger)
+library(lubridate)
+library(tidyr)
+library(ggplot2)
+library(scales)
 #
 # Criados dois diretorios, "Database" e "Graficos" na pasta raiz do projeto
 #
@@ -75,19 +83,27 @@ dff <- left_join(df, dfweek, by = "date", relationship = "many-to-many")
 # Filter the original dataframe to keep only the complete weeks
 # dff_filtered <- dff %>%
 #  filter(week %in% complete_weeks$week)
-head(dff)
+# head(dff)
 # head(dff_filtered)
 #
 # 5. CAMADA DE USUÁRIO
 #
 # Criação dos gráficos!
-library(ggplot2)
 #
-# Gráfico 1 
+# Tratamento do df para os gráficos
+# Substituição dos registros NAs por zero.
+dff <- mutate_all(dff, replace_na, 0)
+head(dff)
+tail(dff)
+#
+# Gráfico 1
+# investigar como fazer mesma com cruzamento de vairaveis pais x casos.
+# investigar como por os nomes em cada linha.
 #
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
 plot <- ggplot(data = dff, aes(x = week, y = total_cases)) +
-  geom_point() +
+  geom_point() + # Ver gráfico de mais de uma camada, mas cruzamento casos x pais x ano
+  scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
        x = "Semana",
        y = "Total de Casos",
