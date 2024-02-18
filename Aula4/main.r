@@ -42,30 +42,25 @@ library(scales)
 # Carrega os dados lidos pelo dataloader em um df tibble
 # Retorna umavariável de nome "df" com os dados lidos
 source("dataloader.r")
-# head(df)
+head(df)
 #
-# Gerado um df apenas com a coluna de datas
-dfweek <- (data.frame(df$date))
-dfweek <- as_tibble(rename(dfweek, date = df.date))
+# Gerado um df apenas com a coluna de datas, excluindo datas duplicadas
+dfweek <- unique(df$date)
 # head(dfweek)
 #
 # 3. FUNÇÔES no script function.r
 #
-# Construção do df semanalizado
+# Construção do df semanalizado - acrescenta colunas em dfweek
 source("function.r")
 # Adição da variável do dia da semana - weekday
-dfweek$weekday <- weekday(dfweek$date)
-# print(n = 20, dfweek)
-# Adição da variável semana do ano - wek
-# Obs: Não pode usar week como função, pois dá conflito com o lubridate!
-dfweek$week <- wek(dfweek$date)
-# print(n = 20, dfweek)
+dfweek <- wek(dfweek)
+print(n = 50, dfweek)
 #
 # Join para juntando df e dfweek com id por date
 # Agora se tem um df completo com as colunas das semanas
 # relationship = "many-to-many" necessário para inibir mensagem do sistema
-dff <- left_join(df, dfweek, by = "date", relationship = "many-to-many")
-# print(n = 50, dff)
+dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many")
+print(n = 50, dff)
 #
 # Exclusão da última semana
 # Uso de if else https://stackoverflow.com/questions/11865195/using-if-else-on-a-data-frame
@@ -91,17 +86,15 @@ dff <- left_join(df, dfweek, by = "date", relationship = "many-to-many")
 # Criação dos gráficos!
 #
 # Tratamento do df para os gráficos
-# Substituição dos registros NAs por zero.
-dff <- mutate_all(dff, replace_na, 0)
-head(dff)
-tail(dff)
+# head(dff)
+# tail(dff)
 #
 # Gráfico 1
 # investigar como fazer mesma com cruzamento de vairaveis pais x casos.
 # investigar como por os nomes em cada linha.
 #
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = week, y = total_cases)) +
+plot <- ggplot(data = dff, aes(x = week, y = total_cases, color = location, group_by(location))) +
   geom_point() + # Ver gráfico de mais de uma camada, mas cruzamento casos x pais x ano
   scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
@@ -111,3 +104,4 @@ plot <- ggplot(data = dff, aes(x = week, y = total_cases)) +
        caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
 plot
 dev.off()
+# ggplot(dfCovidCompleto, aes(x = week, y = total_cases, color = location, group_by(location) ))

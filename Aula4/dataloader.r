@@ -35,4 +35,6 @@ df <- filter(df, location %in% c("Brazil","United States","Mexico","Germany","Fr
 #
 # Selecionando apenas as variáveis desejadas
 df <- select(df, location, date, total_cases, new_cases)
+# Substituição dos registros NAs por zero.
+df <- mutate_all(df, replace_na, 0)
 # head(df
