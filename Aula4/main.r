@@ -58,29 +58,12 @@ print(n = 50, dfweek)
 #
 # Join para juntando df e dfweek com id por date
 # Agora se tem um df completo com as colunas das semanas
-# relationship = "many-to-many" necessário para inibir mensagem do sistema
-dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many")
+# relationship = "many-to-many" necessário para inibir mensagem do sistema - pipe tira última semana
+dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many") %>% filter(week != 6 & year!=2024)
 print(n = 50, dff)
-#
-# Exclusão da última semana
-# Uso de if else https://stackoverflow.com/questions/11865195/using-if-else-on-a-data-frame
-# dff<- filter(dff, week > 0 & weekday < 7 )
-# Count the number of observations per week
-# week_counts <- dff %>%
-#  group_by(week) %>%
-#  summarise(observations = n())
-# head(week_counts)
-# Filter out incomplete weeks (those with less than 7 observations)
-# complete_weeks <- week_counts %>%
-#   filter(observations == 7) %>%
-#  select(week)
-# head(complete_weeks)
-# Filter the original dataframe to keep only the complete weeks
-# dff_filtered <- dff %>%
-#  filter(week %in% complete_weeks$week)
-# head(dff)
-# head(dff_filtered)
-#
+# agrupamento por semana
+dfd <- summarise(group_by(dff, date), sum(total_cases))
+print(n = 50, dfd)
 # 5. CAMADA DE USUÁRIO
 #
 # Criação dos gráficos!
@@ -94,8 +77,8 @@ print(n = 50, dff)
 # investigar como por os nomes em cada linha.
 #
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = week, y = total_cases, color = location, group_by(location))) +
-  geom_point() + # Ver gráfico de mais de uma camada, mas cruzamento casos x pais x ano
+plot <- ggplot(data = dff, aes(x = date, y = total_cases, color = location, group_by(location))) +
+  geom_line() +
   scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
        x = "Semana",
@@ -104,4 +87,3 @@ plot <- ggplot(data = dff, aes(x = week, y = total_cases, color = location, grou
        caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
 plot
 dev.off()
-# ggplot(dfCovidCompleto, aes(x = week, y = total_cases, color = location, group_by(location) ))
