@@ -52,16 +52,17 @@ dfweek <- unique(df$date)
 #
 # Construção do df semanalizado - acrescenta colunas em dfweek
 source("function.r")
-# Adição da variável do dia da semana - weekday
+# Roda a função wek, acresce os campos em dfweek
 dfweek <- wek(dfweek)
 # print(n = 50, dfweek)
 #
 # Join para juntando df e dfweek com id por date
 # Agora se tem um df completo com as colunas das semanas
-# relationship = "many-to-many" necessário para inibir mensagem do sistema - pipe tira última semana
+# "many-to-many", mesma semanas para mais de uma data, pois há vários países
+# inner_join para considerar todos os registros dos dfs
 dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many") %>% filter(week != 6 & year!=2024)
 print(n = 50, dff)
-# agrupamento por semana ?
+# agrupamento por semana ? verificar
 # dfd <- summarise(group_by(dff, date), sum(total_cases))
 # print(n = 50, dfd)
 #
