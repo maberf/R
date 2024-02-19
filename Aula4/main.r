@@ -54,30 +54,38 @@ dfweek <- unique(df$date)
 source("function.r")
 # Adição da variável do dia da semana - weekday
 dfweek <- wek(dfweek)
-print(n = 50, dfweek)
+# print(n = 50, dfweek)
 #
 # Join para juntando df e dfweek com id por date
 # Agora se tem um df completo com as colunas das semanas
 # relationship = "many-to-many" necessário para inibir mensagem do sistema - pipe tira última semana
 dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many") %>% filter(week != 6 & year!=2024)
 print(n = 50, dff)
-# agrupamento por semana
-dfd <- summarise(group_by(dff, date), sum(total_cases))
-print(n = 50, dfd)
+# agrupamento por semana ?
+# dfd <- summarise(group_by(dff, date), sum(total_cases))
+# print(n = 50, dfd)
+#
 # 5. CAMADA DE USUÁRIO
 #
-# Criação dos gráficos!
-#
-# Tratamento do df para os gráficos
-# head(dff)
-# tail(dff)
-#
 # Gráfico 1
-# investigar como fazer mesma com cruzamento de vairaveis pais x casos.
-# investigar como por os nomes em cada linha.
+# Total de Casos
 #
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
 plot <- ggplot(data = dff, aes(x = date, y = total_cases, color = location, group_by(location))) +
+  geom_line() +
+  scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
+  labs(title = "Semana vs Total de Casos",
+       x = "Semana",
+       y = "Total de Casos",
+       subtitle = "owid-covid-data.xlsx",
+       caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
+plot
+dev.off()
+#
+# Gráfico 2
+# Novos Casos
+png("Graficos/novoscasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
+plot <- ggplot(data = dff, aes(x = date, y = new_cases, color = location, group_by(location))) +
   geom_line() +
   scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
