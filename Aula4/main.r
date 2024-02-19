@@ -70,7 +70,6 @@ print(n = 50, dff)
 #
 # Gráfico 1
 # Total de Casos
-#
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
 plot <- ggplot(data = dff, aes(x = date, y = total_cases, color = location, group_by(location))) +
   geom_line() +
