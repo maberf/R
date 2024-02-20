@@ -47,6 +47,7 @@ library(scales)
 # Retorna umavariável de nome "df" com os dados lidos
 source("dataloader.r")
 head(df)
+tail(df)
 #
 # Gerado um df apenas com a coluna de datas, excluindo datas duplicadas
 dfweek <- unique(df$date)
