@@ -56,7 +56,7 @@ source("function.r")
 dfweek <- wek(df$date)
 #head(dfweek)
 #
-# Join para juntando df e dfweek com id por date
+# Join para juntando df e dfweek com id por date e formando o df final dff
 # Agora se tem um df completo com as colunas das semanas
 # "many-to-many", mesma semanas para mais de uma data, pois há vários países
 # inner_join para considerar todos os registros dos dfs
