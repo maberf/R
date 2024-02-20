@@ -282,7 +282,7 @@ source("RaizesQuadratica.r")
 RaizesQuadratica (1,5,6)
 
 # Chamando um script .R
-source("Script_p1.R")
+source("Script_p1.r")
 
 # Criando um projeto novo (pode ser feito pelo menu principal)
 install.packages('ProjectTemplate')

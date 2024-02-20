@@ -1,9 +1,3 @@
-# FGV Curso Masters - 1o SEMESTRE 2024
-# Disciplina Programação em R
-# Professora Adriana Bezerra Bessa
-# Aluno MABER ATHAYDE FERNANDES
-# Exercício 4 - Criação de um projeto Competo em R
-#
 # 2. CAMADA DE DADOS (DATA LOADER)
 #
 # Carregamento dos pacotes previamente instalados
@@ -34,7 +28,7 @@ df <- filter(df, location %in% c("Brazil","United States","Mexico","Germany","Fr
 # head(df)
 #
 # Selecionando apenas as variáveis desejadas
-df <- select(df, location, date, total_cases, new_cases)
+df <- select(df, location, date, total_cases, new_cases, total_deaths, new_deaths)
 # Substituição dos registros NAs por zero.
 df <- mutate_all(df, replace_na, 0)
-# head(df
+# head(df)

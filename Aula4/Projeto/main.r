@@ -4,10 +4,14 @@
 # Aluno MABER ATHAYDE FERNANDES
 # Exercício 4 - Criação de um projeto Completo em R
 #
-# Grupo:
-# XXX
+# Grupo: Sala 2
+#
+# BEATRIZ SANTOS
+# EDUARDO KOIKE
+# FELIPE GENUINO DA SILVA
+# GABRIEL MALTEZ DA SILVA
 # MABER ATHAYDE FERNANDES
-# XXX
+# PEDRO FEITOSA DA SILVA NETO
 #
 # 1. CRIANDO UM PROJETO NO R
 #
@@ -60,7 +64,7 @@ dfweek <- wek(dfweek)
 # Agora se tem um df completo com as colunas das semanas
 # "many-to-many", mesma semanas para mais de uma data, pois há vários países
 # inner_join para considerar todos os registros dos dfs
-dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many") %>% filter(week != 6 & year!=2024)
+dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many")
 print(n = 50, dff)
 # agrupamento por semana ? verificar
 # dfd <- summarise(group_by(dff, date), sum(total_cases))
@@ -71,7 +75,7 @@ print(n = 50, dff)
 # Gráfico 1
 # Total de Casos
 png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = date, y = total_cases, color = location, group_by(location))) +
+plot <- ggplot(data = dff, aes(x = date, y = total_deaths, color = location, group_by(location))) +
   geom_line() +
   scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
@@ -85,7 +89,7 @@ dev.off()
 # Gráfico 2
 # Novos Casos
 png("Graficos/novoscasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = date, y = new_cases, color = location, group_by(location))) +
+plot <- ggplot(data = dff, aes(x = date, y = new_deaths, color = location, group_by(location))) +
   geom_line() +
   scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
   labs(title = "Semana vs Total de Casos",
