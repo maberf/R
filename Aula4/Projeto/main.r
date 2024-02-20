@@ -19,7 +19,7 @@ cat("\014")
 #
 # Definida pasta raiz do projeto
 # Setup do diretório
-setwd("/home/maber/R/Aula4")
+setwd("/home/maber/R/Aula4/Projeto")
 # getwd()
 #
 # Carregamento de pacotes
