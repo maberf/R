@@ -46,42 +46,34 @@ library(scales)
 # Carrega os dados lidos pelo dataloader em um df tibble
 # Retorna umavariável de nome "df" com os dados lidos
 source("dataloader.r")
-head(df)
-tail(df)
-#
-# Gerado um df apenas com a coluna de datas, excluindo datas duplicadas
-dfweek <- unique(df$date)
-# head(dfweek)
+#head(df)
 #
 # 3. FUNÇÔES no script function.r
 #
 # Construção do df semanalizado - acrescenta colunas em dfweek
 source("function.r")
-# Roda a função wek, acresce os campos em dfweek
-dfweek <- wek(dfweek)
-# print(n = 50, dfweek)
+# Roda a função wek, acresce os campos em dfweek, um df semanalizado - dfweek
+dfweek <- wek(df$date)
+#head(dfweek)
 #
 # Join para juntando df e dfweek com id por date
 # Agora se tem um df completo com as colunas das semanas
 # "many-to-many", mesma semanas para mais de uma data, pois há vários países
 # inner_join para considerar todos os registros dos dfs
 dff <- inner_join(df, dfweek, by = "date", relationship = "many-to-many")
-print(n = 50, dff)
-# agrupamento por semana ? verificar
-# dfd <- summarise(group_by(dff, date), sum(total_cases))
-# print(n = 50, dfd)
+head(dff)
 #
 # 5. CAMADA DE USUÁRIO
 #
 # Gráfico 1
 # Total de Casos
-png("Graficos/totalcasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = date, y = total_deaths, color = location, group_by(location))) +
+png("Graficos/totalmortes.png", units = "in", res = 300, width = 10.4, height = 5.85)
+plot <- ggplot(data = dff, aes(x = week, y = total_deaths, color = location, group_by(location))) +
   geom_line() +
-  scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
-  labs(title = "Semana vs Total de Casos",
+  scale_y_continuous("Milhares de Mortes", labels = label_number(accuracy = 1, unit = "", scale = 1e-3)) +
+  labs(title = "Semana vs Total de Mortes",
        x = "Semana",
-       y = "Total de Casos",
+       y = "Total de Mortes",
        subtitle = "owid-covid-data.xlsx",
        caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
 plot
@@ -89,13 +81,13 @@ dev.off()
 #
 # Gráfico 2
 # Novos Casos
-png("Graficos/novoscasos.png", units = "in", res = 300, width = 10.4, height = 5.85)
-plot <- ggplot(data = dff, aes(x = date, y = new_deaths, color = location, group_by(location))) +
+png("Graficos/novasmortes.png", units = "in", res = 300, width = 10.4, height = 5.85)
+plot <- ggplot(data = dff, aes(x = week, y = new_deaths, color = location, group_by(location))) +
   geom_line() +
-  scale_y_continuous("Milhões de Casos", labels = label_number(accuracy = 1, unit = "", scale = 1e-6)) +
-  labs(title = "Semana vs Total de Casos",
+  scale_y_continuous("Milhares de Mortes", labels = label_number(accuracy = 1, unit = "", scale = 1e-3)) +
+  labs(title = "Semana vs Novas Mortes",
        x = "Semana",
-       y = "Total de Casos",
+       y = "Novas Mortes",
        subtitle = "owid-covid-data.xlsx",
        caption = "Fonte: https://github.com/owid/covid-19-data/tree/master/public/data")
 plot
